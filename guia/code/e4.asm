@@ -39,6 +39,6 @@ enterNum:
     add qword[cantidadIngresada], 1
     mov rax, qword[cantidadNums]
     cmp rax, qword[cantidadIngresada] 
-    jne enterNum
+    jh enterNum
 
     ret
