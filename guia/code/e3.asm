@@ -6,16 +6,21 @@ extern puts, gets, sscanf, printf
 section .data
     ingTexto db "Ingrese dos numeros para hacer X elevado a Y, separados por un espacio: ",0
     formatoIngresado db "%d %d", 0
+    formatoInt db "%d",0
+
+    valorNegativo dq -1
+    realCero dq 0
 
     ; Errores:
     msjError db "Hubo un error en el programa", 0
     msjError00 db "Error: 0 elevado a la 0 no es una operacion permitida",0
 
-    ; Debbugin
+    ; Debbuging
     debugA db "ACA A", 0
     debugB db "ACA B", 0
     debugC db "ACA C", 0
-    debugD db "ACA D", 0
+
+
 
     ; Resultado
     msjFinal db "El resultado es: %d", 0
@@ -23,10 +28,15 @@ section .data
 
 
 section .bss
-    X resq 1
-    Y resq 1
-    valoresIngresados resb 50
+    X resq 4
+    Y resq 4
 
+    absX resq 1
+    absY resq 1
+    
+    valorXpotencia resq 1
+
+    valoresIngresados resb 50
 
 section .text
 main:
@@ -51,13 +61,25 @@ main:
     cmp rax, 2
     jne error1
 
-    mov rax, [Y] ;Analisis del input
-    cmp rax, 0
-    je casoY0
+    cmp dword[Y], 0 ; Analisis del input
 
-    mov rax, [X]
-    cmp rax, 0
-    je casoX0
+    sub rsp, 8
+    mov rdi, formatoInt
+    mov rsi, [Y]
+    call printf
+    add rsp, 8
+    je casoY0
+    jl negativeY
+    sub rsp, 8
+    mov rdi, debugA
+    call puts
+    add rsp, 8
+    jl settedY
+    sub rsp, 8
+    mov rdi, debugB
+    call puts
+    add rsp, 8
+    settedY:
 
     ret
 
@@ -76,7 +98,7 @@ casoY0:
     call printf
     add rsp, 8
     call puts
-    ret
+    jmp settedY
 
 casoX0:
     mov rdi, msjFinal
@@ -93,6 +115,25 @@ error00:
     call puts
     add rsp, 8
     ret
+
+negativeY:
+    sub rsp, 8
+    mov rdi, debugC
+    call puts
+    add rsp, 8
+    
+    mov rax, [absY]
+    IMUL rax, qword[valorNegativo]
+    mov [absY], rax
+    
+    sub rsp, 8
+    mov rdi, formatoInt
+    mov rsi, [absY]
+    call printf
+    add rsp, 8
+
+    jmp settedY
+
 
 
 
