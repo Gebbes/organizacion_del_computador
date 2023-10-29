@@ -1,0 +1,31 @@
+Añadir validadores:
+    + Validador gregoriano (comun) (DD/MM/AAAA)
+    + Validador romano (XIV / X / MMXX)
+    + Validador juliano (DDD/AA)
+
+NTH:
+    + Descifrador de año bisciesto para el calendario gregoriano
+
+Transformadores:
+    + gregoriano ---> romano:  (TODO)
+        El enfoque posible podria ser aplicar a cada parte (dia, mes y año)
+        una funcion de transformacion, que basicamente haga una division entera
+        de la mayor letra romana posible al fragmento, el resultado sera la cantidad de
+        letras de ese tipo que se necesitan... Este enfoque es incorrecto:
+        un contraejemplo seria el 90, la C quedaria en 0, y pasa los 90 a al siguiente
+        letra, L, L da 1, y pasa a la siguiente letra con 40, la X, lo que quedaria
+        LXXX lo que obviamente es incorrecto, seria XC 
+    + gregoriano ---> juliano:
+        Posiblemente el mas sencillo de todos, tenemos los dias por mes hardcodeados
+        y e iteramos los primeros MM - 1 meses de ese calendario sumando sus dias
+        y en el ultimo simplemente sumamos los restantes
+    + romano ---> gregoriano:
+        Tambien sencillo, partimos la fecha en fragmentos, y en cada fragmento
+        fragmento = fragmento + letra * valorLetra
+        iterando las letras
+    + juliano ---> gregoriano:
+        Este es mas sencillo, tenemos hardcodeados los dias por mes y 
+        vamos aplicando lo siguiente, si dias mes[i] < DDD ---> 
+        DDD = DDD - mes[i]
+        repetir con siguiente mes. Si mes[i] >= DDD --->
+        fecha: DDD / i - 1 / 20AA
