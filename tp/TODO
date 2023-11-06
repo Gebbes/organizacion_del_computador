@@ -3,6 +3,11 @@ Añadir validadores:
     + Validador romano (XIV / X / MMXX)
     + Validador juliano (DDD/AA)
 
+TODOs:
+    + Arreglar el tema del ultimo numero en juliano
+    + Buscar forma de descifrar el formato romano
+    + Falta identificar a que formato se quiere pasar
+
 Como descifrar que tipo de fecha se ingresa?
     + Hacemos un sscanf de las 3, si falla en todas es invalido. Ahora, pongamos primero 
     gregoriana antes que romana dado que la gregoriana pasa tambien el filtro de la romana
