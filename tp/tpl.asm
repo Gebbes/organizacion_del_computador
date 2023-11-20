@@ -102,7 +102,7 @@ isJulian:
 
     mov rdi, formatoJul
     mov rsi, [jDia] 
-    mov rcx, [jAnio]
+    mov rdx, [jAnio]
     sub rax, rax
     call printf
     jmp clean
