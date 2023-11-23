@@ -6,21 +6,17 @@ section .data
     cierre dq "X",0
     formatoGreg dq "%d/%d/%d",10, 0
 
-
     msjG db "El formato es Gregoriano!",0
 
-
-
-    err dq "Hubo un error", 0
     msjError dq "No proceso la cantidad de args", 0
-    msjErrores dq "Se prc+ocesaron %d", 0
+    msjErrores dq "Se procesaron %d", 0
     
 section .bss
     input resb 50
     
-    gDia resd 1
-    gMes resd 1
-    gAnio resd 1
+    gDia resq 1
+    gMes resq 1
+    gAnio resq 1
 
 section .text
 
@@ -44,21 +40,14 @@ scanInput:
     mov rdx, formatoGreg
     mov r8, gDia
     mov r9, gMes
-    mov r10, gAnio
-    push r10
+    push gAnio
     sub rsp, 32
     call sscanf
     add rsp, 32
-    pop r10
-    mov qword[gAnio], r10
+    pop qword[gAnio]
 
     cmp rax, 3
     je isGregorian
-
-    mov rcx, msjError
-    sub rsp, 32
-    call puts
-    add rsp, 32
 
     mov rcx, msjErrores
     mov rdx, rax

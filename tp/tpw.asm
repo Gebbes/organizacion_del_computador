@@ -51,11 +51,13 @@ scanInput:
     mov rdx, formatoGreg
     mov r8, gDia
     mov r9, gMes
-    push qword[gAnio]
+    mov r10, gAnio
+    push r10
     sub rsp, 32
     call sscanf
     add rsp, 32
-    pop qword[gAnio]
+    pop r10
+    mov qword[gAnio], r10
 
     cmp rax, 3
     je isGregorian
