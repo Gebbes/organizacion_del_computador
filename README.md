@@ -1,4 +1,4 @@
-# Organizacion_del_computador
+# Organizacion del computador
 Implementacion de los 2 TPs hechos en las cursadas 2023C2(individual) y 2024C1(grupal 2) en assembler Intel x86
 
 # TODOs
